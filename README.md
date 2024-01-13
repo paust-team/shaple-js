@@ -1,1 +1,1 @@
-# shaple-client-js
+# shaple JS libraries

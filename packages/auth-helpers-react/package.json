@@ -1,0 +1,37 @@
+{
+	"name": "@shaple/auth-helpers-react",
+	"version": "0.0.1",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"lint": "tsc",
+		"build": "tsup",
+		"clean:all": "rimraf dist"
+	},
+	"keywords": [
+		"Shaple",
+		"Auth",
+		"React"
+	],
+	"devDependencies": {
+		"@shaple/shaple": "workspace:*",
+		"@types/react": "^17.0.65",
+		"@types/react-dom": "^17.0.20",
+		"config": "workspace:*",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"rimraf": "^4.4.1",
+		"tsconfig": "workspace:*",
+		"tsup": "^6.7.0",
+		"typescript": "^4.9.5"
+	},
+	"peerDependencies": {
+		"@shaple/shaple": "workspace:*"
+	},
+	"files": [
+		"dist"
+	]
+}
