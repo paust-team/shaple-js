@@ -15,7 +15,7 @@ export function createShapleClient(
 ) {
 	const browser = isBrowser();
 
-	return createClient(shapleUrl, {
+	return createClient(shapleUrl, shapleKey, {
 		...options,
 		auth: {
 			flowType: 'pkce',
