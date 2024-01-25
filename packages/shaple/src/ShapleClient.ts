@@ -1,5 +1,6 @@
 import { GoTrueClient } from '@supabase/auth-js'
 import { GoTrueClientOptions } from '@supabase/auth-js/dist/module/lib/types'
+import { DEFAULT_AUTH_OPTIONS, DEFAULT_HEADERS } from './lib/constants'
 
 export type ShapleClientOptions = {
   global?: {
@@ -19,8 +20,19 @@ export class ShapleClient {
     if (!shapleUrl) throw Error('shapleUrl is required.')
     if (!shapleKey) throw Error('shapleKey is required.')
 
+    const globalHeaders = {
+      ...DEFAULT_HEADERS,
+      ...(options?.global?.headers ?? {}),
+    } as Record<string, string>
+
     const authUrl = `${shapleUrl}/auth/v1`
-    this.auth = this._initGoTrueClient(authUrl, options?.auth ?? {}, options?.global?.headers ?? {})
+    const defaultStorageKey = `shaple-${new URL(authUrl).hostname.split('.')[0]}-auth-token`
+    const authOptions = {
+      ...DEFAULT_AUTH_OPTIONS,
+      storageKey: defaultStorageKey,
+      ...(options?.auth ?? {}),
+    } as GoTrueClientOptions
+    this.auth = this._initGoTrueClient(authUrl, authOptions, globalHeaders)
   }
 
   private _initGoTrueClient(
