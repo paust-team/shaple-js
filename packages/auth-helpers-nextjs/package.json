@@ -10,7 +10,8 @@
 	"scripts": {
 		"lint": "tsc",
 		"build": "tsup",
-		"clean": "rimraf dist"
+		"clean": "rimraf dist",
+		"test": "vitest"
 	},
 	"keywords": [
 		"Shaple",
@@ -19,7 +20,7 @@
 	],
 	"homepage": "https://github.com/shaple/shaple-js/tree/main/packages/auth-helpers-nextjs#readme",
 	"devDependencies": {
-		"@shaple/shaple": "workspace:*",
+		"@shaple/shaple": "workspace:^*",
 		"@types/set-cookie-parser": "^2.4.3",
 		"config": "workspace:*",
 		"next": "^13.5.5",
@@ -28,13 +29,14 @@
 		"rimraf": "^4.4.1",
 		"tsconfig": "workspace:*",
 		"tslib": "^2.6.2",
-		"tsup": "^6.7.0"
+		"tsup": "^6.7.0",
+		"vitest": "^0.34.6"
 	},
 	"dependencies": {
 		"@shaple/auth-helpers-shared": "workspace:*",
 		"set-cookie-parser": "^2.6.0"
 	},
 	"peerDependencies": {
-		"@shaple/shaple": "workspace:*"
+		"@shaple/shaple": "workspace:^*"
 	}
 }

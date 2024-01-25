@@ -1,5 +1,4 @@
-import { GoTrueClient } from '@supabase/auth-js'
-import { GoTrueClientOptions } from '@supabase/auth-js/dist/module/lib/types'
+import { GoTrueClient, GoTrueClientOptions } from '@supabase/auth-js'
 import { DEFAULT_AUTH_OPTIONS, DEFAULT_HEADERS } from './lib/constants'
 
 export type ShapleClientOptions = {
@@ -11,6 +10,7 @@ export type ShapleClientOptions = {
 
 export class ShapleClient {
   public auth: GoTrueClient
+  public authOptions: GoTrueClientOptions
 
   constructor(
     protected shapleUrl: string,
@@ -33,6 +33,7 @@ export class ShapleClient {
       ...(options?.auth ?? {}),
     } as GoTrueClientOptions
     this.auth = this._initGoTrueClient(authUrl, authOptions, globalHeaders)
+    this.authOptions = authOptions
   }
 
   private _initGoTrueClient(

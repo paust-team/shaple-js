@@ -1,0 +1,27 @@
+[api]
+target = 'http://localhost:8080'
+
+[auth]
+siteurl = 'http://localhost:3000'
+
+[auth.mailer]
+autoconfirm = true
+
+[auth.external]
+emailEnabled = true
+
+[auth.mfa]
+maxenrolledfactors = '0'
+ratelimitchallengeandverify = '0'
+
+[auth.smtp]
+sendername = 'Shaple'
+
+[project]
+id = 4
+name = 'example'
+
+[stack]
+id = 4
+name = 'default'
+siteurl = 'http://localhost:3000'

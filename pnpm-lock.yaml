@@ -18,7 +18,7 @@ importers:
         version: 2.6.0
     devDependencies:
       '@shaple/shaple':
-        specifier: workspace:*
+        specifier: workspace:^*
         version: link:../shaple
       '@types/set-cookie-parser':
         specifier: ^2.4.3
@@ -47,11 +47,14 @@ importers:
       tsup:
         specifier: ^6.7.0
         version: 6.7.0(typescript@4.9.5)
+      vitest:
+        specifier: ^0.34.6
+        version: 0.34.6
 
   packages/auth-helpers-react:
     devDependencies:
       '@shaple/shaple':
-        specifier: workspace:*
+        specifier: workspace:^*
         version: link:../shaple
       '@types/react':
         specifier: ^17.0.65
@@ -83,19 +86,19 @@ importers:
 
   packages/auth-helpers-shared:
     dependencies:
+      cookie:
+        specifier: ^0.6.0
+        version: 0.6.0
       jose:
         specifier: ^4.15.4
         version: 4.15.4
     devDependencies:
       '@shaple/shaple':
-        specifier: workspace:*
+        specifier: workspace:^*
         version: link:../shaple
       '@types/cookie':
         specifier: ^0.5.4
         version: 0.5.4
-      cookie:
-        specifier: ^0.5.0
-        version: 0.5.0
       next:
         specifier: ^12.3.4
         version: 12.3.4(react-dom@18.2.0)(react@18.2.0)
@@ -1625,10 +1628,10 @@ packages:
   /concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-  /cookie@0.5.0:
-    resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
+  /cookie@0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
-    dev: true
+    dev: false
 
   /create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
