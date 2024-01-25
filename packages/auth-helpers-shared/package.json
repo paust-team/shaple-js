@@ -1,6 +1,6 @@
 {
   "name": "@shaple/auth-helpers-shared",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -24,7 +24,7 @@
     "Typescript"
   ],
   "devDependencies": {
-    "@shaple/shaple": "workspace:^*",
+    "@shaple/shaple": "workspace:^",
     "@types/cookie": "^0.5.4",
     "next": "^12.3.4",
     "react": "^18.2.0",
@@ -39,6 +39,6 @@
     "jose": "^4.15.4"
   },
   "peerDependencies": {
-    "@shaple/shaple": "workspace:^*"
+    "@shaple/shaple": "workspace:^"
   }
 }
