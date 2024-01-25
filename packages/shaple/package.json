@@ -1,6 +1,6 @@
 {
   "name": "@shaple/shaple",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "This is javascript client libraries for Shaple",
   "main": "dist/main/index.js",
   "scripts": {
