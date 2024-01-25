@@ -1,0 +1,44 @@
+{
+  "name": "@shaple/auth-helpers-shared",
+  "version": "0.0.6",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "tsc",
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rimraf dist"
+  },
+  "keywords": [
+    "Shaple",
+    "Auth",
+    "Javscript",
+    "Typescript"
+  ],
+  "devDependencies": {
+    "@shaple/shaple": "workspace:^",
+    "@types/cookie": "^0.5.4",
+    "next": "^12.3.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^5.0.5",
+    "tsconfig": "workspace:*",
+    "tsup": "^6.7.0",
+    "vitest": "^0.34.6"
+  },
+  "dependencies": {
+    "cookie": "^0.6.0",
+    "jose": "^4.15.4"
+  },
+  "peerDependencies": {
+    "@shaple/shaple": "workspace:^"
+  }
+}

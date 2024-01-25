@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "homepage": "https://github.com/paust-team/shaple-js",
+  "scripts": {
+    "build": "pnpm -r build",
+    "clean": "pnpm -r run clean",
+    "build:shaple": "cd packages/shaple && pnpm build"
+  },
+  "bugs": {
+    "url": "https://github.com/paust-team/shaple-js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paust-team/shaple-js.git"
+  },
+  "author": "PAUST",
+  "license": "MIT"
+}

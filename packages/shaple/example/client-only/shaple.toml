@@ -1,0 +1,28 @@
+[api]
+target = 'http://localhost:8080'
+
+[auth]
+[auth.external]
+emailenabled = true
+
+[auth.jwt]
+exp = '1h'
+
+[auth.mfa]
+maxenrolledfactors = '0'
+ratelimitchallengeandverify = '0'
+
+[auth.smtp]
+sendername = 'Shaple'
+
+[auth.mailer]
+autoConfirm = true
+
+[project]
+id = 2
+name = 'example-js-client-only'
+
+[stack]
+id = 2
+name = 'dev'
+siteurl = 'http://localhost:3000'
