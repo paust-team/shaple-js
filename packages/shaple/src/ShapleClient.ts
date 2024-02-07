@@ -1,5 +1,7 @@
-import { GoTrueClient, GoTrueClientOptions } from '@supabase/auth-js'
-import { DEFAULT_AUTH_OPTIONS, DEFAULT_HEADERS } from './lib/constants'
+import { GoTrueClient, GoTrueClientOptions } from '@supabase/gotrue-js';
+import { StorageClient } from '@supabase/storage-js';
+import { DEFAULT_AUTH_OPTIONS, DEFAULT_HEADERS } from './lib/constants';
+import { Fetch, fetchWithAuth } from './lib/fetch';
 
 export type ShapleClientOptions = {
   global?: {
@@ -11,6 +13,9 @@ export type ShapleClientOptions = {
 export class ShapleClient {
   public auth: GoTrueClient
   public authOptions: GoTrueClientOptions
+
+  protected headers: Record<string, string>
+  protected fetch?: Fetch
 
   constructor(
     protected shapleUrl: string,
@@ -34,6 +39,14 @@ export class ShapleClient {
     } as GoTrueClientOptions
     this.auth = this._initGoTrueClient(authUrl, authOptions, globalHeaders)
     this.authOptions = authOptions
+    this.headers = globalHeaders
+
+    this.fetch = fetchWithAuth(shapleKey, this.getAccessToken.bind(this), this.fetch)
+  }
+
+  get storage() {
+    const storageUrl = `${this.shapleUrl}/storage/v1`
+    return new StorageClient(storageUrl, this.headers, this.fetch)
   }
 
   private _initGoTrueClient(
@@ -52,6 +65,13 @@ export class ShapleClient {
       headers: { ...authHeaders, ...headers },
     })
   }
+
+  private async getAccessToken() {
+    const { data } = await this.auth.getSession()
+
+    return data.session?.access_token ?? null
+  }
+
 }
 
 export function createClient(

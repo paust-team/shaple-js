@@ -10,15 +10,15 @@ importers:
 
   packages/auth-helpers-nextjs:
     dependencies:
-      '@shaple/auth-helpers-shared':
-        specifier: workspace:*
-        version: link:../auth-helpers-shared
       set-cookie-parser:
         specifier: ^2.6.0
         version: 2.6.0
     devDependencies:
+      '@shaple/auth-helpers-shared':
+        specifier: workspace:^
+        version: link:../auth-helpers-shared
       '@shaple/shaple':
-        specifier: workspace:^*
+        specifier: workspace:^
         version: link:../shaple
       '@types/set-cookie-parser':
         specifier: ^2.4.3
@@ -54,7 +54,7 @@ importers:
   packages/auth-helpers-react:
     devDependencies:
       '@shaple/shaple':
-        specifier: workspace:^*
+        specifier: workspace:^
         version: link:../shaple
       '@types/react':
         specifier: ^17.0.65
@@ -94,7 +94,7 @@ importers:
         version: 4.15.4
     devDependencies:
       '@shaple/shaple':
-        specifier: workspace:^*
+        specifier: workspace:^
         version: link:../shaple
       '@types/cookie':
         specifier: ^0.5.4
@@ -157,6 +157,15 @@ importers:
       '@supabase/auth-js':
         specifier: ^2.62.1
         version: 2.62.1
+      '@supabase/gotrue-js':
+        specifier: ^2.62.2
+        version: 2.62.2
+      '@supabase/node-fetch':
+        specifier: ^2.6.13
+        version: 2.6.13
+      '@supabase/storage-js':
+        specifier: ^2.5.5
+        version: 2.5.5
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
@@ -1071,11 +1080,30 @@ packages:
       '@supabase/node-fetch': 2.6.15
     dev: false
 
+  /@supabase/gotrue-js@2.62.2:
+    resolution: {integrity: sha512-AP6e6W9rQXFTEJ7sTTNYQrNf0LCcnt1hUW+RIgUK+Uh3jbWvcIST7wAlYyNZiMlS9+PYyymWQ+Ykz/rOYSO0+A==}
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+    dev: false
+
+  /@supabase/node-fetch@2.6.13:
+    resolution: {integrity: sha512-rEHQaDVzxLZMCK3p+JW2nzEsK4AJpOQhetppaqAzrFum0Ub8wcnoM/8f1dWRZSulY5fRDP6rJaWT/8X3VleCzg==}
+    engines: {node: 4.x || >=6.0.0}
+    dependencies:
+      whatwg-url: 5.0.0
+    dev: false
+
   /@supabase/node-fetch@2.6.15:
     resolution: {integrity: sha512-1ibVeYUacxWYi9i0cf5efil6adJ9WRyZBLivgjs+AUpewx1F3xPi7gLgaASI2SmIQxPoCEjAsLAzKPgMJVgOUQ==}
     engines: {node: 4.x || >=6.0.0}
     dependencies:
       whatwg-url: 5.0.0
+    dev: false
+
+  /@supabase/storage-js@2.5.5:
+    resolution: {integrity: sha512-OpLoDRjFwClwc2cjTJZG8XviTiQH4Ik8sCiMK5v7et0MDu2QlXjCAW3ljxJB5+z/KazdMOTnySi+hysxWUPu3w==}
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
     dev: false
 
   /@swc/helpers@0.4.11:
