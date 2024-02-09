@@ -39,6 +39,6 @@
     "jose": "^4.15.4"
   },
   "peerDependencies": {
-    "@shaple/shaple": "workspace:^"
+    "@shaple/shaple": "^0.1.0"
   }
 }

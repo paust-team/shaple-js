@@ -37,7 +37,6 @@
 		"set-cookie-parser": "^2.6.0"
 	},
 	"peerDependencies": {
-		"@shaple/auth-helpers-shared": "workspace:^",
-		"@shaple/shaple": "workspace:^"
+		"@shaple/auth-helpers-shared": "workspace:^"
 	}
 }
