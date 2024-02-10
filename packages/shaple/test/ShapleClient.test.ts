@@ -1,4 +1,4 @@
-import {describe, test, expect, beforeEach, afterEach} from 'vitest';
+import {afterEach, beforeEach, describe, expect, test} from 'vitest';
 import {createClient, ShapleClient, StorageError} from "../src";
 
 test('new shaple', () => {
@@ -61,6 +61,10 @@ describe('shaple client', () => {
             console.error("delete bucket error: ", error)
             expect(error).toBeNull()
         }
+
+        const {error} = await adminShaple.schema("public").from("people").delete()
+        console.error("delete schema error: ", error)
+        expect(error).toBeNull()
     })
 
     const signUp = async () => {
@@ -97,7 +101,7 @@ describe('shaple client', () => {
         await signIn()
     })
 
-    test("when upload storage object authenticated, then it should be downloadable", async() => {
+    test("when upload storage object authenticated, then it should be downloadable", async () => {
         await signUp()
         await signIn()
 
@@ -121,5 +125,17 @@ describe('shaple client', () => {
 
         const text = await file.text()
         expect(text).toBe("hello world")
+    })
+
+    test("when insert people data, should be ok", async () => {
+        await signUp()
+        await signIn()
+        const {error} = await shaple.schema("public").from("people").insert({
+            name: "Dennis Park",
+            age: 30,
+        })
+
+        console.error("insert error: ", error)
+        expect(error).toBeNull()
     })
 })

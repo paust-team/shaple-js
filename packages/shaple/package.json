@@ -28,6 +28,7 @@
     "@supabase/auth-js": "^2.62.1",
     "@supabase/gotrue-js": "^2.62.2",
     "@supabase/node-fetch": "^2.6.13",
+    "@supabase/postgrest-js": "^1.11.0",
     "@supabase/storage-js": "^2.5.5",
     "node-fetch": "^3.3.2"
   },
