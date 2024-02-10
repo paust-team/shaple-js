@@ -11,7 +11,7 @@
 		"lint": "tsc",
 		"build": "tsup",
 		"clean": "rimraf dist",
-		"test": "vitest"
+		"test": "vitest --run"
 	},
 	"keywords": [
 		"Shaple",
