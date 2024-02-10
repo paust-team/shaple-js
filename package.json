@@ -5,7 +5,8 @@
     "build": "pnpm -r build",
     "clean": "pnpm -r run clean",
     "build:shaple": "cd packages/shaple && pnpm build",
-    "release": "lerna version --conventional-commits --yes --no-push"
+    "release": "lerna version --conventional-commits --yes --no-push",
+    "test": "pnpm -r test"
   },
   "bugs": {
     "url": "https://github.com/paust-team/shaple-js/issues"
