@@ -6,30 +6,6 @@ test('new shaple', () => {
     expect(shaple).toBeDefined()
 })
 
-async function removeAllObjects(shaple: ShapleClient, path: string, bucketId: string): Promise<StorageError> {
-    const {data: objects, error} = await shaple.storage.from(bucketId).list(path)
-    if (error) {
-        return error
-    }
-
-    for (const obj of objects) {
-        if (path != "") {
-            path = path + "/"
-        }
-        const error = await removeAllObjects(shaple, path + obj.name, bucketId)
-        if (error) {
-            return error
-        }
-    }
-
-    const {error: removeError} = await shaple.storage.from(bucketId).remove([path])
-    if (removeError) {
-        return removeError
-    }
-
-    return null
-}
-
 describe('shaple client', () => {
     let shaple: ShapleClient = null
     let adminShaple: ShapleClient = null
@@ -51,15 +27,10 @@ describe('shaple client', () => {
         const {data: buckets, error: bucketError} = await adminShaple.storage.listBuckets()
         expect(bucketError).toBeNull()
         for (const bucket of buckets) {
-            const removeError = await removeAllObjects(adminShaple, "", bucket.id)
-            if (removeError) {
-                console.error("remove all objects error: ", removeError)
-            }
-            expect(removeError).toBeNull()
-
-            const {error} = await adminShaple.storage.deleteBucket(bucket.id)
-            console.error("delete bucket error: ", error)
-            expect(error).toBeNull()
+            const {error: emptyBucketError} = await adminShaple.storage.emptyBucket(bucket.id)
+            expect(emptyBucketError).toBeNull()
+            const {error: deleteBucketError} = await adminShaple.storage.deleteBucket(bucket.id)
+            expect(deleteBucketError).toBeNull()
         }
 
         const {error} = await adminShaple.schema("public").from("people").delete()
