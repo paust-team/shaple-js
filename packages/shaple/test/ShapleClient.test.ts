@@ -15,6 +15,7 @@ describe('shaple client', () => {
     })
 
     afterEach(async () => {
+        // cleanup for auth
         {
             const {data: {users}, error} = await adminShaple.auth.admin.listUsers()
             expect(error).toBeNull()
@@ -24,18 +25,24 @@ describe('shaple client', () => {
             }
         }
 
-        const {data: buckets, error: bucketError} = await adminShaple.storage.listBuckets()
-        expect(bucketError).toBeNull()
-        for (const bucket of buckets) {
-            const {error: emptyBucketError} = await adminShaple.storage.emptyBucket(bucket.id)
-            expect(emptyBucketError).toBeNull()
-            const {error: deleteBucketError} = await adminShaple.storage.deleteBucket(bucket.id)
-            expect(deleteBucketError).toBeNull()
+        // cleanup for storage
+        {
+            const {data: buckets, error} = await adminShaple.storage.listBuckets()
+            expect(error).toBeNull()
+            for (const bucket of buckets) {
+                const {error: emptyBucketError} = await adminShaple.storage.emptyBucket(bucket.id)
+                expect(emptyBucketError).toBeNull()
+                const {error: deleteBucketError} = await adminShaple.storage.deleteBucket(bucket.id)
+                expect(deleteBucketError).toBeNull()
+            }
         }
 
-        const {error} = await adminShaple.schema("public").from("people").delete()
-        console.error("delete schema error: ", error)
-        expect(error).toBeNull()
+        // cleanup for postgrest
+        {
+            const {error} = await adminShaple.schema("public").from("people").delete()
+            console.error("delete schema error: ", error)
+            expect(error).toBeNull()
+        }
     })
 
     const signUp = async () => {
