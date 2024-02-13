@@ -1,21 +1,39 @@
-import { GoTrueClient, GoTrueClientOptions } from '@supabase/auth-js'
-import { DEFAULT_AUTH_OPTIONS, DEFAULT_HEADERS } from './lib/constants'
+import { GoTrueClient, GoTrueClientOptions } from '@supabase/gotrue-js';
+import { StorageClient } from '@supabase/storage-js';
+import {DEFAULT_AUTH_OPTIONS, DEFAULT_HEADERS} from './lib/constants';
+import { Fetch, fetchWithAuth } from './lib/fetch';
+import {PostgrestClient, PostgrestQueryBuilder} from '@supabase/postgrest-js';
+import {GenericSchema} from "@supabase/postgrest-js/dist/module/types";
 
-export type ShapleClientOptions = {
+export type ShapleClientOptions<SchemaName> = {
   global?: {
     headers?: Record<string, string>
   }
   auth?: GoTrueClientOptions
+  db?: {
+    schema?: SchemaName
+  }
 }
 
-export class ShapleClient {
+export class ShapleClient<Database = any,
+    SchemaName extends string & keyof Database = 'public' extends keyof Database
+        ? 'public'
+        : string & keyof Database,
+    Schema extends GenericSchema = Database[SchemaName] extends GenericSchema
+        ? Database[SchemaName]
+        : any
+> {
   public auth: GoTrueClient
   public authOptions: GoTrueClientOptions
+
+  protected postgrest: PostgrestClient<Database, SchemaName>
+  protected headers: Record<string, string>
+  protected fetch?: Fetch
 
   constructor(
     protected shapleUrl: string,
     protected shapleKey: string,
-    options?: ShapleClientOptions
+    options?: ShapleClientOptions<SchemaName>
   ) {
     if (!shapleUrl) throw Error('shapleUrl is required.')
     if (!shapleKey) throw Error('shapleKey is required.')
@@ -32,8 +50,53 @@ export class ShapleClient {
       storageKey: defaultStorageKey,
       ...(options?.auth ?? {}),
     } as GoTrueClientOptions
+
     this.auth = this._initGoTrueClient(authUrl, authOptions, globalHeaders)
     this.authOptions = authOptions
+    this.headers = globalHeaders
+
+    this.fetch = fetchWithAuth(shapleKey, this.getAccessToken.bind(this), this.fetch)
+
+    const postgrestUrl = `${this.shapleUrl}/postgrest/v1`
+    const postgrestOptions = {
+      schema: 'public' as SchemaName,
+      ...(options?.db ?? {}),
+    }
+    this.postgrest =  new PostgrestClient<Database, SchemaName, Schema>(postgrestUrl, {
+      headers: this.headers,
+      schema: postgrestOptions.schema,
+      fetch: this.fetch,
+    })
+
+  }
+  /**
+   * Perform a query on a table or a view.
+   *
+   * @param relation - The table or view name to query
+   */
+  from: PostgrestClient<Database, SchemaName>['from'] = (relation: string) => {
+    return this.postgrest.from(relation)
+  }
+
+  /**
+   * Perform a query on a schema distinct from the default schema supplied via
+   * the `options.db.schema` constructor parameter.
+   *
+   * The schema needs to be on the list of exposed schemas inside Supabase.
+   *
+   * @param schema - The name of the schema to query
+   */
+  schema: PostgrestClient<Database, SchemaName>['schema'] = <
+      DynamicSchema extends string & keyof Database
+  >(
+      schema: DynamicSchema
+  ) => {
+    return this.postgrest.schema<DynamicSchema>(schema)
+  }
+
+  get storage() {
+    const storageUrl = `${this.shapleUrl}/storage/v1`
+    return new StorageClient(storageUrl, this.headers, this.fetch)
   }
 
   private _initGoTrueClient(
@@ -52,12 +115,26 @@ export class ShapleClient {
       headers: { ...authHeaders, ...headers },
     })
   }
+
+  private async getAccessToken() {
+    const { data } = await this.auth.getSession()
+
+    return data.session?.access_token ?? null
+  }
+
 }
 
-export function createClient(
+export function createClient<Database = any,
+    SchemaName extends string & keyof Database = 'public' extends keyof Database
+        ? 'public'
+        : string & keyof Database,
+    Schema extends GenericSchema = Database[SchemaName] extends GenericSchema
+        ? Database[SchemaName]
+        : any
+>(
   shapleUrl: string,
   shapleKey: string,
-  options?: ShapleClientOptions
-): ShapleClient {
-  return new ShapleClient(shapleUrl, shapleKey, options)
+  options?: ShapleClientOptions<SchemaName>
+): ShapleClient<Database, SchemaName, Schema> {
+  return new ShapleClient<Database, SchemaName, Schema>(shapleUrl, shapleKey, options)
 }

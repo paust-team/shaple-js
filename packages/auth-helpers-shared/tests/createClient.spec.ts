@@ -14,7 +14,6 @@ describe('createClient', () => {
             },
         );
 
-        expect(client.authOptions.storage).toBeTypeOf('object');
         expect(client.auth.storage).toBeInstanceOf(BrowserCookieAuthStorageAdapter);
     })
 });

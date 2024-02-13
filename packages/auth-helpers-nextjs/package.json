@@ -1,6 +1,6 @@
 {
 	"name": "@shaple/auth-helpers-nextjs",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Helpers for Next.js to use with Shaple Auth",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -11,7 +11,7 @@
 		"lint": "tsc",
 		"build": "tsup",
 		"clean": "rimraf dist",
-		"test": "vitest"
+		"test": "vitest --run"
 	},
 	"keywords": [
 		"Shaple",
@@ -20,8 +20,8 @@
 	],
 	"homepage": "https://github.com/shaple/shaple-js/tree/main/packages/auth-helpers-nextjs#readme",
 	"devDependencies": {
-		"@shaple/shaple": "workspace:^",
 		"@shaple/auth-helpers-shared": "workspace:^",
+		"@shaple/shaple": "workspace:^",
 		"@types/set-cookie-parser": "^2.4.3",
 		"config": "workspace:*",
 		"next": "^13.5.5",
@@ -37,7 +37,6 @@
 		"set-cookie-parser": "^2.6.0"
 	},
 	"peerDependencies": {
-		"@shaple/auth-helpers-shared": "workspace:^",
-		"@shaple/shaple": "workspace:^"
+		"@shaple/auth-helpers-shared": "workspace:^"
 	}
 }

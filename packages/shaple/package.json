@@ -1,6 +1,6 @@
 {
   "name": "@shaple/shaple",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "This is javascript client libraries for Shaple",
   "main": "dist/main/index.js",
   "scripts": {
@@ -8,7 +8,9 @@
     "build:module": "tsc -p tsconfig.module.json",
     "build:main": "tsc -p tsconfig.json",
     "format": "prettier --write \"{src,test}/**/*.ts\"",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "test": "vitest --run --dir test",
+    "test:watch": "vitest --watch --dir test"
   },
   "private": false,
   "publishConfig": {
@@ -24,6 +26,10 @@
   "types": "dist/module/index.d.ts",
   "dependencies": {
     "@supabase/auth-js": "^2.62.1",
+    "@supabase/gotrue-js": "^2.62.2",
+    "@supabase/node-fetch": "^2.6.13",
+    "@supabase/postgrest-js": "^1.11.0",
+    "@supabase/storage-js": "^2.5.5",
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
