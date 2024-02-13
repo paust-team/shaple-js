@@ -3,10 +3,5 @@
   "version": "independent",
   "npmClient": "pnpm",
   "changelog": true,
-  "changelogPreset": "angular",
-  "command": {
-    "version": {
-      "message": "chore(release): publish %s"
-    }
-  }
+  "changelogPreset": "angular"
 }
