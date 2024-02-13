@@ -1,5 +1,5 @@
 import {afterEach, beforeEach, describe, expect, test} from 'vitest';
-import {createClient, ShapleClient, StorageError} from "../src";
+import {createClient, ShapleClient, Session} from "../src";
 
 test('new shaple', () => {
     const shaple = createClient("http://localhost:8080", "123123")
@@ -9,9 +9,17 @@ test('new shaple', () => {
 describe('shaple client', () => {
     let shaple: ShapleClient = null
     let adminShaple: ShapleClient = null
+    let session: Session = null
+
+    const userEmail = "dennis.park@paust.io"
+    const userPassword = "q1w2E#R$"
+
     beforeEach(async () => {
         shaple = createClient(process.env.VITE_SHAPLE_URL, process.env.VITE_SHAPLE_ANON_KEY)
         adminShaple = createClient(process.env.VITE_SHAPLE_URL, process.env.VITE_SHAPLE_ADMIN_KEY)
+
+        await signUp()
+        session = await signIn()
     })
 
     afterEach(async () => {
@@ -48,8 +56,8 @@ describe('shaple client', () => {
     const signUp = async () => {
         await shaple.auth.signOut()
         const {data: {session}, error} = await shaple.auth.signUp({
-            email: "dennis.park@paust.io",
-            password: "q1w2E#R$",
+            email: userEmail,
+            password: userPassword,
             options: {
                 data: {
                     name: "Dennis Park"
@@ -63,26 +71,22 @@ describe('shaple client', () => {
 
     const signIn = async () => {
         const {data: {session}, error} = await shaple.auth.signInWithPassword({
-            email: "dennis.park@paust.io",
-            password: "q1w2E#R$",
+            email: userEmail,
+            password: userPassword,
         })
 
         console.log(error)
         expect(error).toBeNull()
 
-        expect(session.user.user_metadata.name).toBe("Dennis Park")
+        return session
     }
 
 
     test('when signUp, then signInWithPassword should be ok', async () => {
-        await signUp()
-        await signIn()
+        expect(session.user.user_metadata.name).toBe("Dennis Park")
     })
 
     test("when upload storage object authenticated, then it should be downloadable", async () => {
-        await signUp()
-        await signIn()
-
         const expectedBucketName = "test-123"
         const {data: bucket, error} = await shaple.storage.createBucket(expectedBucketName, {
             public: false,
@@ -106,8 +110,6 @@ describe('shaple client', () => {
     })
 
     test("when insert people data, should be ok", async () => {
-        await signUp()
-        await signIn()
         const {error} = await shaple.schema("public").from("people").insert({
             name: "Dennis Park",
             age: 30,
