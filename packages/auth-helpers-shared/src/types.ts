@@ -10,7 +10,7 @@ export type DefaultCookieOptions = Pick<
 
 export type CookieOptionsWithName = { name?: string } & CookieOptions;
 
-export type ShapleClientOptionsWithoutAuth = Omit<
-	ShapleClientOptions,
+export type ShapleClientOptionsWithoutAuth<SchemaName> = Omit<
+	ShapleClientOptions<SchemaName>,
 	'auth'
 >;

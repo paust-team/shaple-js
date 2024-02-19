@@ -158,9 +158,6 @@ importers:
 
   packages/shaple:
     dependencies:
-      '@supabase/auth-js':
-        specifier: ^2.62.1
-        version: 2.62.1
       '@supabase/gotrue-js':
         specifier: ^2.62.2
         version: 2.62.2
@@ -1585,12 +1582,6 @@ packages:
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
-
-  /@supabase/auth-js@2.62.1:
-    resolution: {integrity: sha512-hUFX1iwKCUURydCS9nbnYyuQ82FYK9Be6fQVkFXX5oM7rmMUOvlcbZu9voG4eeFu/8ScjmOdEKQcUpPqTSWlFg==}
-    dependencies:
-      '@supabase/node-fetch': 2.6.15
-    dev: false
 
   /@supabase/gotrue-js@2.62.2:
     resolution: {integrity: sha512-AP6e6W9rQXFTEJ7sTTNYQrNf0LCcnt1hUW+RIgUK+Uh3jbWvcIST7wAlYyNZiMlS9+PYyymWQ+Ykz/rOYSO0+A==}

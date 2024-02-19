@@ -1,9 +1,9 @@
-import { GoTrueClient, GoTrueClientOptions } from '@supabase/gotrue-js';
-import { StorageClient } from '@supabase/storage-js';
-import {DEFAULT_AUTH_OPTIONS, DEFAULT_HEADERS} from './lib/constants';
-import { Fetch, fetchWithAuth } from './lib/fetch';
-import {PostgrestClient, PostgrestQueryBuilder} from '@supabase/postgrest-js';
-import {GenericSchema} from "@supabase/postgrest-js/dist/module/types";
+import { GoTrueClient, GoTrueClientOptions } from '@supabase/gotrue-js'
+import { StorageClient } from '@supabase/storage-js'
+import { DEFAULT_AUTH_OPTIONS, DEFAULT_HEADERS } from './lib/constants'
+import { Fetch, fetchWithAuth } from './lib/fetch'
+import { PostgrestClient, PostgrestQueryBuilder } from '@supabase/postgrest-js'
+import { GenericSchema } from '@supabase/postgrest-js/dist/module/types'
 
 export type ShapleClientOptions<SchemaName> = {
   global?: {
@@ -15,13 +15,14 @@ export type ShapleClientOptions<SchemaName> = {
   }
 }
 
-export class ShapleClient<Database = any,
-    SchemaName extends string & keyof Database = 'public' extends keyof Database
-        ? 'public'
-        : string & keyof Database,
-    Schema extends GenericSchema = Database[SchemaName] extends GenericSchema
-        ? Database[SchemaName]
-        : any
+export class ShapleClient<
+  Database = any,
+  SchemaName extends string & keyof Database = 'public' extends keyof Database
+    ? 'public'
+    : string & keyof Database,
+  Schema extends GenericSchema = Database[SchemaName] extends GenericSchema
+    ? Database[SchemaName]
+    : any,
 > {
   public auth: GoTrueClient
   public authOptions: GoTrueClientOptions
@@ -62,12 +63,11 @@ export class ShapleClient<Database = any,
       schema: 'public' as SchemaName,
       ...(options?.db ?? {}),
     }
-    this.postgrest =  new PostgrestClient<Database, SchemaName, Schema>(postgrestUrl, {
+    this.postgrest = new PostgrestClient<Database, SchemaName, Schema>(postgrestUrl, {
       headers: this.headers,
       schema: postgrestOptions.schema,
       fetch: this.fetch,
     })
-
   }
   /**
    * Perform a query on a table or a view.
@@ -87,9 +87,9 @@ export class ShapleClient<Database = any,
    * @param schema - The name of the schema to query
    */
   schema: PostgrestClient<Database, SchemaName>['schema'] = <
-      DynamicSchema extends string & keyof Database
+    DynamicSchema extends string & keyof Database,
   >(
-      schema: DynamicSchema
+    schema: DynamicSchema
   ) => {
     return this.postgrest.schema<DynamicSchema>(schema)
   }
@@ -121,16 +121,16 @@ export class ShapleClient<Database = any,
 
     return data.session?.access_token ?? null
   }
-
 }
 
-export function createClient<Database = any,
-    SchemaName extends string & keyof Database = 'public' extends keyof Database
-        ? 'public'
-        : string & keyof Database,
-    Schema extends GenericSchema = Database[SchemaName] extends GenericSchema
-        ? Database[SchemaName]
-        : any
+export function createClient<
+  Database = any,
+  SchemaName extends string & keyof Database = 'public' extends keyof Database
+    ? 'public'
+    : string & keyof Database,
+  Schema extends GenericSchema = Database[SchemaName] extends GenericSchema
+    ? Database[SchemaName]
+    : any,
 >(
   shapleUrl: string,
   shapleKey: string,

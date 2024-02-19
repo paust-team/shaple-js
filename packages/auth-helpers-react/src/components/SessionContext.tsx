@@ -46,7 +46,7 @@ export const SessionContextProvider = ({
                                        }: PropsWithChildren<SessionContextProviderProps>) => {
     const [session, setSession] = useState<Session | null>(initialSession);
     const [isLoading, setIsLoading] = useState<boolean>(!initialSession);
-    const [error, setError] = useState<AuthError>();
+    const [error, setError] = useState<AuthError|null>(null);
 
     useEffect(() => {
         if (!session && initialSession) {

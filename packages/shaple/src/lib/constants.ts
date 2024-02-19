@@ -1,5 +1,5 @@
 import { version } from './version'
-import { GoTrueClientOptions } from '@supabase/auth-js/dist/module/lib/types'
+import { GoTrueClientOptions } from '@supabase/gotrue-js/dist/module/lib/types'
 
 const JS_ENV = (function () {
   // @ts-ignore
