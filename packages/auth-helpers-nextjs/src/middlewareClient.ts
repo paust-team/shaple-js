@@ -12,7 +12,7 @@ import { NextResponse } from 'next/server';
 import { splitCookiesString } from 'set-cookie-parser';
 
 import type { NextRequest } from 'next/server';
-import type { ShapleClient } from '@shaple/shaple';
+import type { ShapleClient, GenericSchema } from '@shaple/shaple';
 
 class NextMiddlewareAuthStorageAdapter extends CookieAuthStorageAdapter {
 	constructor(
@@ -59,7 +59,15 @@ class NextMiddlewareAuthStorageAdapter extends CookieAuthStorageAdapter {
 	}
 }
 
-export function createMiddlewareClient(
+export function createMiddlewareClient<
+	Database = any,
+	SchemaName extends string & keyof Database = 'public' extends keyof Database
+		? 'public'
+		: string & keyof Database,
+	Schema extends GenericSchema = Database[SchemaName] extends GenericSchema
+		? Database[SchemaName]
+		: any,
+>(
 	context: { req: NextRequest; res: NextResponse },
 	{
 		shapleUrl = process.env.NEXT_PUBLIC_SHAPLE_URL,
@@ -69,17 +77,17 @@ export function createMiddlewareClient(
 	}: {
 		shapleUrl?: string;
 		shapleKey?: string;
-		options?: ShapleClientOptionsWithoutAuth;
+		options?: ShapleClientOptionsWithoutAuth<SchemaName>;
 		cookieOptions?: CookieOptionsWithName;
 	} = {}
-): ShapleClient {
+): ShapleClient<Database, SchemaName, Schema> {
 	if (!shapleUrl || !shapleKey) {
 		throw new Error(
 			'either NEXT_PUBLIC_SHAPLE_URL and NEXT_PUBLIC_SHAPLE_ANON_KEY env variables or shapleUrl and shapleKey are required!'
 		);
 	}
 
-	return createShapleClient(shapleUrl, shapleKey, {
+	return createShapleClient<Database, SchemaName, Schema>(shapleUrl, shapleKey, {
 		...options,
 		global: {
 			...options?.global,

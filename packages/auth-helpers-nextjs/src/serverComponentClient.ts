@@ -8,6 +8,7 @@ import {
 import { cookies } from 'next/headers';
 
 import type { ShapleClient } from '@shaple/shaple';
+import {GenericSchema} from "@shaple/shaple";
 
 class NextServerComponentAuthStorageAdapter extends CookieAuthStorageAdapter {
 	constructor(
@@ -33,7 +34,15 @@ class NextServerComponentAuthStorageAdapter extends CookieAuthStorageAdapter {
 	}
 }
 
-export function createServerComponentClient(
+export function createServerComponentClient<
+	Database = any,
+	SchemaName extends string & keyof Database = 'public' extends keyof Database
+		? 'public'
+		: string & keyof Database,
+	Schema extends GenericSchema = Database[SchemaName] extends GenericSchema
+		? Database[SchemaName]
+		: any,
+>(
 	context: {
 		cookies: () => ReturnType<typeof cookies>;
 	},
@@ -45,17 +54,17 @@ export function createServerComponentClient(
 	}: {
 		shapleUrl?: string;
 		shapleKey?: string;
-		options?: ShapleClientOptionsWithoutAuth;
+		options?: ShapleClientOptionsWithoutAuth<SchemaName>;
 		cookieOptions?: CookieOptionsWithName;
 	} = {}
-): ShapleClient {
+): ShapleClient<Database, SchemaName, Schema> {
 	if (!shapleUrl || !shapleKey) {
 		throw new Error(
 			'either NEXT_PUBLIC_SHAPLE_URL and NEXT_PUBLIC_SHAPLE_ANON_KEY env variables or shapleUrl and shapleKey are required!'
 		);
 	}
 
-	return createShapleClient(shapleUrl, shapleKey, {
+	return createShapleClient<Database, SchemaName, Schema>(shapleUrl, shapleKey, {
 		...options,
 		global: {
 			...options?.global,

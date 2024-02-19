@@ -5,11 +5,19 @@ import {
 	createShapleClient
 } from '@shaple/auth-helpers-shared';
 
-import type { ShapleClient } from '@shaple/shaple';
+import type { ShapleClient, GenericSchema } from '@shaple/shaple';
 
 let shaple: ShapleClient;
 
-export function createClientComponentClient({
+export function createClientComponentClient<
+	Database = any,
+	SchemaName extends string & keyof Database = 'public' extends keyof Database
+		? 'public'
+		: string & keyof Database,
+	Schema extends GenericSchema = Database[SchemaName] extends GenericSchema
+		? Database[SchemaName]
+		: any,
+>({
 	shapleUrl = process.env.NEXT_PUBLIC_SHAPLE_URL,
 	shapleKey = process.env.NEXT_PUBLIC_SHAPLE_ANON_KEY,
 	options,
@@ -18,10 +26,10 @@ export function createClientComponentClient({
 }: {
 	shapleUrl?: string;
 	shapleKey?: string;
-	options?: ShapleClientOptionsWithoutAuth;
+	options?: ShapleClientOptionsWithoutAuth<SchemaName>;
 	cookieOptions?: CookieOptionsWithName;
 	isSingleton?: boolean;
-} = {}): ShapleClient {
+} = {}): ShapleClient<Database, SchemaName, Schema> {
 	if (!shapleUrl || !shapleKey) {
 		throw new Error(
 			'either NEXT_PUBLIC_SHAPLE_URL and NEXT_PUBLIC_SHAPLE_ANON_KEY env variables or shapleUrl and shapleKey are required!'
@@ -29,7 +37,7 @@ export function createClientComponentClient({
 	}
 
 	const createNewClient = () =>
-		createShapleClient(shapleUrl, shapleKey, {
+		createShapleClient<Database, SchemaName, Schema>(shapleUrl, shapleKey, {
 			...options,
 			global: {
 				...options?.global,
@@ -48,10 +56,10 @@ export function createClientComponentClient({
 		// of a Supabase client across Client Components.
 		const _shaple = shaple ?? createNewClient();
 		// For SSG and SSR always create a new shaple client
-		if (typeof window === 'undefined') return _shaple;
+		if (typeof window === 'undefined') return _shaple as ShapleClient<Database, SchemaName, Schema>;
 		// Create the shaple client once in the client
 		if (!shaple) shaple = _shaple;
-		return shaple;
+		return shaple as ShapleClient<Database, SchemaName, Schema>;
 	}
 
 	// This allows for multiple shaple clients, which may be required when using

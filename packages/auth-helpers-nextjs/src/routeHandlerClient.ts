@@ -7,7 +7,7 @@ import {
 } from '@shaple/auth-helpers-shared';
 import { cookies } from 'next/headers';
 
-import type { ShapleClient } from '@shaple/shaple';
+import type { ShapleClient, GenericSchema } from '@shaple/shaple';
 
 class NextRouteHandlerAuthStorageAdapter extends CookieAuthStorageAdapter {
 	constructor(
@@ -36,7 +36,15 @@ class NextRouteHandlerAuthStorageAdapter extends CookieAuthStorageAdapter {
 	}
 }
 
-export function createRouteHandlerClient(
+export function createRouteHandlerClient<
+	Database = any,
+	SchemaName extends string & keyof Database = 'public' extends keyof Database
+		? 'public'
+		: string & keyof Database,
+	Schema extends GenericSchema = Database[SchemaName] extends GenericSchema
+		? Database[SchemaName]
+		: any,
+>(
 	context: {
 		cookies: () => ReturnType<typeof cookies>;
 	},
@@ -48,17 +56,17 @@ export function createRouteHandlerClient(
 	}: {
 		shapleUrl?: string;
 		shapleKey?: string;
-		options?: ShapleClientOptionsWithoutAuth;
+		options?: ShapleClientOptionsWithoutAuth<SchemaName>;
 		cookieOptions?: CookieOptionsWithName;
 	} = {}
-): ShapleClient {
+): ShapleClient<Database, SchemaName, Schema> {
 	if (!shapleUrl || !shapleKey) {
 		throw new Error(
 			'either NEXT_PUBLIC_SHAPLE_URL and NEXT_PUBLIC_SHAPLE_ANON_KEY env variables or shapleUrl and shapleKey are required!'
 		);
 	}
 
-	return createShapleClient(shapleUrl, shapleKey, {
+	return createShapleClient<Database, SchemaName, Schema>(shapleUrl, shapleKey, {
 		...options,
 		global: {
 			...options?.global,
