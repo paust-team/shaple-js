@@ -5,7 +5,7 @@
     "build": "pnpm -r build",
     "clean": "pnpm -r run clean",
     "build:shaple": "cd packages/shaple && pnpm build",
-    "version": "lerna version --conventional-commits --yes --no-push && pnpm -r run version",
+    "version": "lerna version --conventional-commits --yes --no-push && pnpm -r run version && git commit -a --amend",
     "test": "pnpm -r test"
   },
   "bugs": {
