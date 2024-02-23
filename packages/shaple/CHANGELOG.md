@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/1dennispark/shaple-js/compare/@shaple/shaple@0.2.0...@shaple/shaple@0.2.1) (2024-02-23)
+
+
+### Bug Fixes
+
+* **shaple:** add types.ts for generic schema ([2b8803e](https://github.com/1dennispark/shaple-js/commit/2b8803e59eed4057ae809ffbc9ce4348728f03a9))
+
+
+
+
+
 # 0.2.0 (2024-02-19)
 
 
