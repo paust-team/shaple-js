@@ -3,17 +3,7 @@ import { StorageClient } from '@supabase/storage-js'
 import { DEFAULT_AUTH_OPTIONS, DEFAULT_HEADERS } from './lib/constants'
 import { Fetch, fetchWithAuth } from './lib/fetch'
 import { PostgrestClient, PostgrestQueryBuilder } from '@supabase/postgrest-js'
-import { GenericSchema } from '@supabase/postgrest-js/dist/module/types'
-
-export type ShapleClientOptions<SchemaName> = {
-  global?: {
-    headers?: Record<string, string>
-  }
-  auth?: GoTrueClientOptions
-  db?: {
-    schema?: SchemaName
-  }
-}
+import { GenericSchema, ShapleClientOptions } from './lib/types'
 
 export class ShapleClient<
   Database = any,
