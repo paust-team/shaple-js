@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.9](https://github.com/1dennispark/shaple-js/compare/@shaple/auth-helpers-shared@0.0.8...@shaple/auth-helpers-shared@0.0.9) (2024-02-23)
+
+**Note:** Version bump only for package @shaple/auth-helpers-shared
+
+
+
+
+
 ## 0.0.8 (2024-02-19)
 
 
