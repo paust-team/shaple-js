@@ -3,5 +3,10 @@
   "version": "independent",
   "npmClient": "pnpm",
   "changelog": true,
-  "changelogPreset": "angular"
+  "changelogPreset": "angular",
+  "command": {
+    "version": {
+      "conventionalCommits": true
+    }
+  }
 }

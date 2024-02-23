@@ -4,7 +4,7 @@
   "description": "This is javascript client libraries for Shaple",
   "main": "dist/main/index.js",
   "scripts": {
-    "postversion": "node -p \"'export const version = \\'' + require('./package.json').version + '\\''\" > src/lib/version.ts",
+    "version": "node -p \"'export const version = \\'' + require('./package.json').version + '\\''\" > src/lib/version.ts && git add src/lib/version.ts",
     "build": "run-s clean format build:*",
     "build:module": "tsc -p tsconfig.module.json",
     "build:main": "tsc -p tsconfig.json",
