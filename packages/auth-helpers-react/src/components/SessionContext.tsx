@@ -143,13 +143,18 @@ export const useSessionContext = () => {
     return context;
 };
 
-export function useShapleClient() {
+export function useShapleClient<
+  Database = any,
+  SchemaName extends string & keyof Database = 'public' extends keyof Database
+    ? 'public'
+    : string & keyof Database
+>() {
     const context = useContext(SessionContext);
     if (context === undefined) {
         throw new Error(`useShapleClient must be used within a SessionContextProvider.`);
     }
 
-    return context.shapleClient;
+    return context.shapleClient as ShapleClient<Database, SchemaName>;
 }
 
 export const useSession = () => {
