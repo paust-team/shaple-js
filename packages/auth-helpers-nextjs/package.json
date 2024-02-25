@@ -1,6 +1,6 @@
 {
 	"name": "@shaple/auth-helpers-nextjs",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "Helpers for Next.js to use with Shaple Auth",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
