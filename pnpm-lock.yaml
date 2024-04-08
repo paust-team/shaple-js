@@ -159,6 +159,9 @@ importers:
 
   packages/shaple:
     dependencies:
+      '@supabase/functions-js':
+        specifier: ^2.2.2
+        version: 2.2.2
       '@supabase/gotrue-js':
         specifier: ^2.62.2
         version: 2.62.2
@@ -1583,6 +1586,12 @@ packages:
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
+
+  /@supabase/functions-js@2.2.2:
+    resolution: {integrity: sha512-sJGq1nludmi7pY/fdtCpyY/pYonx7MfHdN408bqb736guWcVI1AChYVbI4kUM978EuOE4Ci6l7bUudfGg07QRw==}
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+    dev: false
 
   /@supabase/gotrue-js@2.62.2:
     resolution: {integrity: sha512-AP6e6W9rQXFTEJ7sTTNYQrNf0LCcnt1hUW+RIgUK+Uh3jbWvcIST7wAlYyNZiMlS9+PYyymWQ+Ykz/rOYSO0+A==}

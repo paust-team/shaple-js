@@ -26,6 +26,7 @@
   "module": "dist/module/index.js",
   "types": "dist/module/index.d.ts",
   "dependencies": {
+    "@supabase/functions-js": "^2.2.2",
     "@supabase/gotrue-js": "^2.62.2",
     "@supabase/node-fetch": "^2.6.13",
     "@supabase/postgrest-js": "^1.11.0",

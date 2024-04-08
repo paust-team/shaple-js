@@ -4,6 +4,7 @@ import { DEFAULT_AUTH_OPTIONS, DEFAULT_HEADERS } from './lib/constants'
 import { Fetch, fetchWithAuth } from './lib/fetch'
 import { PostgrestClient, PostgrestQueryBuilder } from '@supabase/postgrest-js'
 import { GenericSchema, ShapleClientOptions } from './lib/types'
+import { FunctionsClient } from '@supabase/functions-js'
 
 export class ShapleClient<
   Database = any,
@@ -87,6 +88,14 @@ export class ShapleClient<
   get storage() {
     const storageUrl = `${this.shapleUrl}/storage/v1`
     return new StorageClient(storageUrl, this.headers, this.fetch)
+  }
+
+  get functions() {
+    const functionsUrl = `${this.shapleUrl}/functions/v1`
+    return new FunctionsClient(functionsUrl, {
+      headers: this.headers,
+      customFetch: this.fetch,
+    })
   }
 
   private _initGoTrueClient(
