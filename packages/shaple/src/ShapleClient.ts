@@ -90,12 +90,12 @@ export class ShapleClient<
     return new StorageClient(storageUrl, this.headers, this.fetch)
   }
 
-  get functions() {
-    const functionsUrl = `${this.shapleUrl}/functions/v1`
-    return new FunctionsClient(functionsUrl, {
+  get vapis() {
+    const vapisUrl = `${this.shapleUrl}/vapis/v1`
+    return new FunctionsClient(vapisUrl, {
       headers: this.headers,
       customFetch: this.fetch,
-    })
+    });
   }
 
   private _initGoTrueClient(
